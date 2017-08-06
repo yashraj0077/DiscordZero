@@ -5,5 +5,5 @@
 	    echo $_GET['u'];
 	} else {
 		include ("login.html");
-	}
+	} 
 ?>
