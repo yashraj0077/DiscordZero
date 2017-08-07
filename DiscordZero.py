@@ -53,13 +53,14 @@ async def on_message(message):
 	if logs in yes:
 		print(yellow+"["+str(message.timestamp)[11:16]+"] "+red+author+": "+cyan+message.content+white)
 	if message.author.id != client.user.id:
-		body = "["+str(message.timestamp)[11:16]+"] "+author+": "+message.content
-		
+		body = '['+str(message.timestamp)[11:16]+'] '+author+': '+message.content
+		body = str(body)
+		print(body)
 		values = """
 		  {
-		    "deviceid": """+hg_deviceid+""",
-		    "fromnumber": """+'"'+sender+'"'+""",
-		    "body": """+'"'+body+'"'+"""
+		    "deviceid": """,hg_deviceid,""",
+		    "fromnumber": """,sender,""",
+		    "body": """,body,"""
 		  }
 		"""
 		
@@ -67,10 +68,10 @@ async def on_message(message):
 		  'Content-Type': 'application/json'
 		}
 		
-		try:
-			request = urllib.request.Request('https://dashboard.hologram.io/api/1/sms/incoming?apikey='+hg_api, data=values.encode("utf-8"), headers=headers)
-			response_body = urllib.request.urlopen(request).read()
-		except:
-			print(red+"Failed to login. Message not sent."+white)
+		#try:
+		request = urllib.request.Request('https://dashboard.hologram.io/api/1/sms/incoming?apikey='+hg_api, data=values, headers=headers)
+		response_body = urllib.request.urlopen(request).read()
+		#except:
+		#	print(red+"Failed to login. Message not sent."+white)
 
 client.run(email, password)
