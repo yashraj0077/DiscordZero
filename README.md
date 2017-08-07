@@ -1,4 +1,4 @@
-[![image.png](https://s2.postimg.org/yiwthe1rd/image.png)](https://postimg.org/image/bu7mhtkdh/)
+![image.png](http://i.imgur.com/52TwIUT.png)
 
 <p align="center">
     <a href="https://github.com/0xCoto/DiscordZero/releases/latest"><img src="https://img.shields.io/github/downloads/0xCoto/DiscordZero/total.svg?style=flat-square&amp;colorA=191919&amp;colorB=6641E5" alt="Github All Releases" /></a>
@@ -28,4 +28,4 @@ python DiscordZero.py
 DiscordZero uses the [`Discord.py`](https://github.com/Rapptz/discord.py) library to hook on to account notifications. Once a message has been received, a SMS is sent through the Hologram.io [Web API](https://hologram.io/docs/reference/cloud/http/#/reference/hologram-cloud/sms/send-sms-to-a-device) which is received in less than 10 seconds after being sent.
 
 # Credits
-DiscordZero was created by @0xCoto and @samdenty99.
+DiscordZero was created by [@0xCoto](https://github.com/0xCoto) and [@samdenty99](https://github.com/samdenty99).
