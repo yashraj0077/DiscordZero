@@ -1,6 +1,7 @@
 import urllib.request
 import discord
 import asyncio
+import json
 
 #Colors
 black = "\033[0;30m"
@@ -53,25 +54,21 @@ async def on_message(message):
 	if logs in yes:
 		print(yellow+"["+str(message.timestamp)[11:16]+"] "+red+author+": "+cyan+message.content+white)
 	if message.author.id != client.user.id:
-		body = '['+str(message.timestamp)[11:16]+'] '+author+': '+message.content
-		body = str(body)
-		print(body)
-		values = """
-		  {
-		    "deviceid": """,hg_deviceid,""",
-		    "fromnumber": """,sender,""",
-		    "body": """,body,"""
-		  }
-		"""
+		body = str('['+str(message.timestamp)[11:16]+'] '+author+': '+message.content)
+		values = json.dumps({
+		    "deviceid": hg_deviceid,
+		    "fromnumber": sender,
+		    "body": body,
+		})
 		
 		headers = {
 		  'Content-Type': 'application/json'
 		}
 		
-		#try:
-		request = urllib.request.Request('https://dashboard.hologram.io/api/1/sms/incoming?apikey='+hg_api, data=values, headers=headers)
-		response_body = urllib.request.urlopen(request).read()
-		#except:
-		#	print(red+"Failed to login. Message not sent."+white)
+		try:
+			request = urllib.request.Request('https://dashboard.hologram.io/api/1/sms/incoming?apikey='+hg_api, data=values.encode('utf8'), headers=headers)
+			response_body = urllib.request.urlopen(request).read()
+		except:
+			print(red+"Failed to login. Message not sent."+white)
 
 client.run(email, password)
