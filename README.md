@@ -1,4 +1,4 @@
-![image.png](http://i.imgur.com/52TwIUT.png)
+![image.png](http://i.imgur.com/eQeaMUk.png)
 
 <p align="center">
     <a href="https://github.com/0xCoto/DiscordZero/releases/latest"><img src="https://img.shields.io/github/downloads/0xCoto/DiscordZero/total.svg?style=flat-square&amp;colorA=191919&amp;colorB=6641E5" alt="Github All Releases" /></a>&nbsp;&nbsp;
