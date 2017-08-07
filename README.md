@@ -7,10 +7,12 @@
     <a href="https://github.com/0xCoto/DiscordZero"><img src="https://img.shields.io/github/stars/0xCoto/DiscordZero.svg?label=Star&amp;style=flat-square&amp;colorA=191919&amp;colorB=6641E5" alt="GitHub stars" /></a>
     <a href="https://github.com/0xCoto/DiscordZero/fork"><img src="https://img.shields.io/github/forks/0xCoto/DiscordZero.svg?label=Fork&amp;style=flat-square&amp;colorA=191919&amp;colorB=6641E5" alt="GitHub forks" /></a>
 </p>
-# DiscordZero
-DiscordZero is a lightweight program that allows you to Discord SMS notifications on your phone, free of charge anywhere in the world!
-# Getting started
 
+# DiscordZero
+
+DiscordZero is a lightweight program that allows you to Discord SMS notifications on your phone, free of charge anywhere in the world!
+
+# Getting started
 #### Installation
 ```git clone https://github.com/0xCoto/DiscordZero```
 
@@ -20,6 +22,7 @@ DiscordZero is a lightweight program that allows you to Discord SMS notification
 cd DiscordZero
 python DiscordZero.py
 ```
+
 
 # Mechanism
 DiscordZero uses the [`Discord.py`](https://github.com/Rapptz/discord.py) library to hook on to account notifications. Once a message has been received, a SMS is sent through the Hologram.io [Web API](https://hologram.io/docs/reference/cloud/http/#/reference/hologram-cloud/sms/send-sms-to-a-device) which is received in less than 10 seconds after being sent.
