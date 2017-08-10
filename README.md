@@ -10,7 +10,7 @@
 
 # DiscordZero
 
-DiscordZero is a lightweight Python Script that allows you to Discord SMS notifications on your phone, free of charge, anywhere in the world!
+DiscordZero is a Python Script that allows you to get Discord SMS notifications on your phone - Free of charge, anywhere in the world!
 
 # Getting started
 #### Installation
