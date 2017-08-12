@@ -24,7 +24,16 @@ const client = new Discord.Client();
 const chalk = require('chalk');
 const request = require('request');
 const prompt = require('prompt');
+const net = require('net');
+const http = require('http');
+const fs = require('fs');
+const path = require('path')
 var title, body;
+
+http.createServer(function (request, response) {
+	console.log('HTTP SERVER STARTED')
+}).listen(process.env.PORT || 5000);
+
 
 console.log(chalk.magenta("\n\n  ____  _                       _  ")+chalk.red(" _____              \n")+chalk.magenta(" |  _ \\(_)___  ___ ___  _ __ __| | ")+chalk.red("|__  /___ _ __ ___  \n")+chalk.magenta(" | | | | / __|/ __/ _ \\| '__/ _` | ")+chalk.red("  / // _ \\ '__/ _ \\ \n")+chalk.magenta(" | |_| | \\__ \\ (_| (_) | | | (_| | ")+chalk.red(" / /|  __/ | | (_) |\n")+chalk.magenta(" |____/|_|___/\\___\\___/|_|  \\__,_|")+chalk.red(" /____\\___|_|  \\___/\n"));
 console.log(chalk.blueBright("   Created by ") + chalk.yellowBright("Sam Denty (") + chalk.redBright("samdenty99") + chalk.yellowBright(") & Coto (") + chalk.redBright("0xCoto")+ chalk.yellowBright(")"))
@@ -47,30 +56,41 @@ if (apiKey && deviceId && discordToken && fromNumber && HologramPlusAPI) {
 
 client.on('ready', () => {
   console.log(chalk.greenBright("\n\nLogged in as: ") + chalk.cyanBright(client.user.username+" ")+chalk.yellowBright("("+client.user.id+")"));
-  if (SMSonStartup) request(HologramPlusAPI + '?key='+apiKey+'&id='+deviceId+'&from='+fromNumber+'&title=DiscordZero&body=Client started!{$nl$}IP Address: {$ip$}')
+  if (SMSonStartup) request(HologramPlusAPI + '?key='+apiKey+'&id='+deviceId+'&from='+fromNumber+'&title=DiscordZero&body=Client started!{$nl$}Server IP Address: {$ip$}')
 });
 
 client.on('message', message => {
 	var now=new Date();
 	// If message not from self
 	if(client.user.tag != message.author.tag) {
+		var authorTag = message.author.tag;
+		// If Tag is #0000 (Aka a webhook) then remove the tag name
+		var realTag = authorTag.slice(-5);
+		if (realTag == "#0000") authorTag = authorTag.slice(0, -5);
 		if(message.channel.name) {
 			// Channel chat
-			// Print message and status in terminal (process.stdout.write is used because it doesn't leave a newline)
-			process.stdout.write(chalk.yellowBright("[" + now.getHours() + ":"+now.getMinutes()+"] ") + chalk.greenBright(message.guild) + chalk.green("#"+message.channel.name+" ") + chalk.redBright(message.author.tag + ": ") + chalk.cyanBright(message.cleanContent) + "    ");
-			// Set the SMS title (NOTE: This is a HologramPlusAPI feature, https://github.com/samdenty99/HologramPlusAPI)
-			title = encodeURIComponent("[" + message.guild + "#" + message.channel.name + "] @" + message.author.tag + "{$nl$}");
-			// Encode the Body into a URL
-			body = encodeURIComponent(message.cleanContent);
+				// Print message and status in terminal (process.stdout.write is used because it doesn't leave a newline)
+				process.stdout.write(chalk.yellowBright("[" + now.getHours() + ":"+now.getMinutes()+"] ") + chalk.greenBright(message.guild) + chalk.green("#"+message.channel.name+" ") + chalk.redBright(authorTag + ": ") + chalk.cyanBright(message.cleanContent) + "    ");
+				// Set the SMS title (NOTE: This is a HologramPlusAPI feature, https://github.com/samdenty99/HologramPlusAPI)
+				title = encodeURIComponent("[" + message.guild + "#" + message.channel.name + "] @" + authorTag + "{$nl$}");
+				// Encode the Body into a URL
+				body = encodeURIComponent(message.cleanContent);
 		} else {
 			// Private message
-			process.stdout.write(chalk.yellowBright("["+now.getHours()+":"+now.getMinutes()+"] ") + chalk.redBright(message.author.tag + ": ") + chalk.cyanBright(message.cleanContent) + "    ");
-			title = encodeURIComponent("@"+message.author.tag + "{$nl$}");
-			// Encode the Body into a URL
-			body = encodeURIComponent(message.cleanContent);
+				process.stdout.write(chalk.yellowBright("["+now.getHours()+":"+now.getMinutes()+"] ") + chalk.redBright(authorTag + ": ") + chalk.cyanBright(message.cleanContent) + "    ");
+				title = encodeURIComponent("@"+authorTag + "{$nl$}");
+				// Encode the Body into a URL
+				body = encodeURIComponent(message.cleanContent);
 		}
-		console.log(message.filename)
-		request(HologramPlusAPI + '?key='+apiKey+'&id='+deviceId+'&from='+fromNumber+'&title='+title+'&body=' + body, function (error, response, body) {
+		// Custom numbers for different servers (eg. allowing you to mute them on your phone)
+		/*if (message.guild == "samdd" || message.guild == "Notifications") {
+			var choosenFromNumber = fromNumber;
+		} else if (message.guild == "Seytopia"){
+			var choosenFromNumber = "6";
+		} else {
+			var choosenFromNumber = "7";
+		}*/
+		request(HologramPlusAPI + '?key='+apiKey+'&id='+deviceId+'&from='+choosenFromNumber+'&title='+title+'&body=' + body, function (error, response, body) {
 		  if (!error && response.statusCode == 200) {
 		    var json = JSON.parse(body);
 		    if (json.error != 0) {
