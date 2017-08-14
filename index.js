@@ -104,7 +104,7 @@ client.on('message', message => {
 		}
 		var uptime=process.uptime();
 		if (message.author.id == "294916911194570754" || message.author.id == client.user.id) {
-			message.reply("🏓 Pong  |  DiscordZero client online (ROOT)!\n```Server uptime  : "+format(uptime)+"\nSMS messages   : "+sStatus+"\nSMS delivered  : "+totalMessages + "```")
+			message.reply("🏓 Pong  |  DiscordZero client online (ROOT)!\n```Server uptime   : "+format(uptime)+"\nSMS messages    : "+sStatus+"\nSMS delivered   : "+totalMessages + "\nHologramPlusAPI : "+HologramPlusAPI+"```")
 		} else {
 			message.reply("🏓 Pong  |  DiscordZero client online!\n```SMS messages   : "+sStatus+"```")
 		}
