@@ -103,12 +103,18 @@ client.on('message', message => {
 			throttle=+(new Date).getTime() +10000;
 		}
 		var uptime=process.uptime();
-		if (message.author.id == "294916911194570754" || message.author.id == client.user.id) {
-			message.reply("🏓 Pong  |  DiscordZero client online (ROOT)!\n```Server uptime   : "+format(uptime)+"\nSMS messages    : "+sStatus+"\nSMS delivered   : "+totalMessages + "\nHologramPlusAPI : "+HologramPlusAPI+"```")
-		} else {
-			message.reply("🏓 Pong  |  DiscordZero client online!\n```SMS messages   : "+sStatus+"```")
-		}
-		return;
+
+		request.get({
+		  url : HologramPlusAPI,
+		  time : true
+		},function(err, response){
+			if (message.author.id == "294916911194570754" || message.author.id == client.user.id) {
+				message.reply("🏓 Pong  |  DiscordZero client online (ROOT)!\n```Server uptime   : "+format(uptime)+"\nSMS messages    : "+sStatus+"\nSMS delivered   : "+totalMessages + "\nHologramPlusAPI : "+HologramPlusAPI+"\nResponse time   : "+ response.elapsedTime + "ms```")
+			} else {
+				message.reply("🏓 Pong  |  DiscordZero client online!\n```SMS messages   : "+sStatus+"\nResponse time   : "+ response.elapsedTime + "ms```")
+			}
+			return;
+		});
 	}
 	// If message not from self
 	try {if (message.guild.id == "309531752014151690") return} catch(e) {}
